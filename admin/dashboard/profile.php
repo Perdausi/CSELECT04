@@ -28,20 +28,39 @@
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
-                    <?php 
-                        include "../nav/header.php";
-                    ?>
+                
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h1 class="mt-4">Simple Sidebar</h1>
-                    <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                    <p>
-                        Make sure to keep all page content within the
-                        <code>#page-content-wrapper</code>
-                        . The top navbar is optional, and just for demonstration. Just create an element with the
-                        <code>#sidebarToggle</code>
-                        ID which will toggle the menu when clicked.
-                    </p>
+                    <h1 class="mt-4">Profile Management</h1>
+                    <form action="../query/profile_query.php" method="POST">
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" placeholder="Name" name="name"/>
+                            <label for="inputName">Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputAddress" type="text" placeholder="Address" name="address"/>
+                            <label for="inputAddress">Address</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputAge" type="text" placeholder="Age" name="age"/>
+                            <label for="inputAge">Age</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputStatus" type="text" placeholder="Civil Status" name="status"/>
+                            <label for="inputStatus">Civil Status</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputCitizenship" type="text" placeholder="Citizenship" name="citizenship"/>
+                            <label for="inputCitizenship">Citizenship</label>
+                        </div>
+
+                        <button class="btn btn-primary " type="submit">Confirm</button>
+                    
+                        
+                    </form>
                 </div>
             </div>
         </div>

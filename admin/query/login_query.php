@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connection.php'; // Include database connection
+include '../database/connection.php'; // Include database connection
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($password == $row['password']) { // Make sure passwords are stored as plain text for this to work
             $_SESSION['admin_id'] = $row['id'];
             $_SESSION['admin_username'] = $row['username'];
-            header("Location: dashboard/dashboard.php");
+            header("Location: ../dashboard/dashboard.php");
             exit();
         } else {
             echo "<script>alert('Incorrect password!'); window.location='index.php';</script>";
