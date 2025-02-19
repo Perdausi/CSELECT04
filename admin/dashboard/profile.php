@@ -28,7 +28,10 @@
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
-                
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <div class="container-fluid">
+                        <button class="btn btn-light" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>                    </div>
+                </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
                     <h1 class="mt-4">Profile Management</h1>
