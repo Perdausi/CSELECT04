@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($conn, $query);
 
     if ($result) {
-        echo "<script>alert('Profile Submitted!');</script>";
+        echo "<script>alert('Profile Submitted!'); window.location='../dashboard/profile.php';</script>";
     } else {
         echo "<script>alert('Something went Wrong!');</script>";
     }
