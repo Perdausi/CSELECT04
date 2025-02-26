@@ -35,7 +35,7 @@
                 <!-- Page content-->
                 <div class="container-fluid">
                     <h1 class="mt-4">Profile Management</h1>
-                    <form action="../query/profile_query.php" method="POST">
+                    <form action="../query/profile_query.php" method="POST" enctype="multipart/form-data">
                         <div class="form-floating mb-3">
                             <input class="form-control" type="text" placeholder="Name" name="name"/>
                             <label for="inputName">Name</label>
@@ -50,6 +50,20 @@
                             <label for="inputAge">Age</label>
                         </div>
 
+                        
+                            <select name="gender" id="" class="form-control p-3 mb-3">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+
+                            <select name="course" id="" class="form-control p-3 mb-3">
+                                <option value="BSCS">BSCS</option>
+                                <option value="BSIT">BSIT</option>
+                                <option value="BSTB">BSTB</option>
+                                <option value="UNDER GRAD">UNDER GRAD</option>
+                            </select>
+                       
+
                         <div class="form-floating mb-3">
                             <input class="form-control" id="inputStatus" type="text" placeholder="Civil Status" name="status"/>
                             <label for="inputStatus">Civil Status</label>
@@ -58,6 +72,10 @@
                         <div class="form-floating mb-3">
                             <input class="form-control" id="inputCitizenship" type="text" placeholder="Citizenship" name="citizenship"/>
                             <label for="inputCitizenship">Citizenship</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <input class="form-control p-3" id="profile" type="file" name="profile_picture" accept="image/*"/>
                         </div>
 
                         <button class="btn btn-primary " type="submit">Confirm</button>

@@ -8,15 +8,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $address = $_POST['address'];
     $age = $_POST['age'];
+    $gender = $_POST['gender'];
+    $course = $_POST['course'];
     $status = $_POST['status'];
     $citizenship = $_POST['citizenship'];
+    
 
-    $query = "INSERT INTO `profile` (`name`, `address`, `age`, `status`, `citizenship`) VALUES ('$name', '$address', '$age', '$status', '$citizenship')";
+    if (!empty($_FILES['profile_picture']['name'])) {
+        $upload_dir = "../uploads/"; 
+        $file_name = time() . "_" . $_FILES['profile_picture']['name']; 
+        $target_path = $upload_dir . $file_name;
+
+        
+        if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target_path)) {
+            echo "File uploaded successfully!";
+        } else {
+            echo "Error uploading file.";
+        }
+    } else {
+        $target_path = null; 
+    }
+
+    $query = "INSERT INTO `profile` (`name`, `address`, `age`, `gender`, `course`, `status`, `citizenship`, `profile_picture`) VALUES ('$name', '$address', '$age', '$gender', '$course', '$status', '$citizenship', '$target_path')";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
-        // Check if the password matches
-        echo "<script>alert('Profile Submitted!'); window.location='../dashboard/profile.php';</script>";
+        echo "<script>alert('Profile Submitted!');</script>";
     } else {
         echo "<script>alert('Something went Wrong!');</script>";
     }
