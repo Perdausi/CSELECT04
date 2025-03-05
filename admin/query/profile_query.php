@@ -10,7 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $age = $_POST['age'];
     $gender = $_POST['gender'];
     $course = $_POST['course'];
+    $description = $_POST['description'];
     $status = $_POST['status'];
+    $isActive = $_POST['isActive'];
     $citizenship = $_POST['citizenship'];
     
 
@@ -29,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_path = null; 
     }
 
-    $query = "INSERT INTO `profile` (`name`, `address`, `age`, `gender`, `course`, `status`, `citizenship`, `profile_picture`) VALUES ('$name', '$address', '$age', '$gender', '$course', '$status', '$citizenship', '$target_path')";
+    $query = "INSERT INTO `profile` (`name`, `address`, `age`, `gender`, `course`, `description`, `status`, `isActive`, `citizenship`, `profile_picture`) VALUES ('$name', '$address', '$age', '$gender', '$course', '$description', '$status', '$isActive', '$citizenship', '$target_path')";
     $result = mysqli_query($conn, $query);
 
     if ($result) {

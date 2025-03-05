@@ -62,6 +62,16 @@
                                 <option value="BSTB">BSTB</option>
                                 <option value="UNDER GRAD">UNDER GRAD</option>
                             </select>
+
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputCourse" type="textarea" placeholder="description" name="description"/>
+                            <label for="inputCourse">Description</label>
+                        </div>
+
+                        <select name="isActive" id="" class="form-control p-3 mb-3">
+                                <option value="active">Active</option>
+                                <option value="inActive">Inctive</option>
+                            </select>
                        
 
                         <div class="form-floating mb-3">
