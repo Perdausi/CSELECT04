@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 05, 2025 at 11:57 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: 127.0.0.1:3306
+-- Generation Time: Apr 10, 2025 at 05:40 AM
+-- Server version: 5.7.31
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,11 +27,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin_tbl`
 --
 
-CREATE TABLE `admin_tbl` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `admin_tbl`;
+CREATE TABLE IF NOT EXISTS `admin_tbl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(200) NOT NULL,
-  `password` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `password` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin_tbl`
@@ -43,11 +45,63 @@ INSERT INTO `admin_tbl` (`id`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `education`
+--
+
+DROP TABLE IF EXISTS `education`;
+CREATE TABLE IF NOT EXISTS `education` (
+  `educ_id` int(11) NOT NULL AUTO_INCREMENT,
+  `attainment` varchar(200) NOT NULL,
+  `school_name` varchar(200) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  PRIMARY KEY (`educ_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `education`
+--
+
+INSERT INTO `education` (`educ_id`, `attainment`, `school_name`, `description`) VALUES
+(3, 'COLLEGE', 'LA SALLE DE MAGAY UNIVERSITY', 'HALE LUYA DE LA SALLE!!'),
+(2, 'COLLEGE', 'ATENEO', 'GO GO GO!');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `experience`
+--
+
+DROP TABLE IF EXISTS `experience`;
+CREATE TABLE IF NOT EXISTS `experience` (
+  `exp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `position` varchar(200) NOT NULL,
+  `company` varchar(200) NOT NULL,
+  `dates` varchar(200) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  PRIMARY KEY (`exp_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `experience`
+--
+
+INSERT INTO `experience` (`exp_id`, `position`, `company`, `dates`, `description`) VALUES
+(1, 'Developer', 'Born Hub', '2025-03-22', 'Best Company in the World'),
+(2, 'Frontend Dev', 'BeegTech.INC', '2025-04-10', 'Best Company in the World'),
+(3, 'MERN-STACK DEV', 'Sunshine Company', '2025-05-01', 'Best Company in the World'),
+(4, '', '', '', 'School that cares'),
+(5, '', '', '', 'IGHUDFHGUIFD'),
+(6, '', '', '', 'GO GO GO!');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `profile`
 --
 
-CREATE TABLE `profile` (
-  `profile_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `profile`;
+CREATE TABLE IF NOT EXISTS `profile` (
+  `profile_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
   `age` varchar(100) NOT NULL,
@@ -57,8 +111,9 @@ CREATE TABLE `profile` (
   `status` varchar(100) NOT NULL,
   `isActive` varchar(100) NOT NULL,
   `citizenship` varchar(100) NOT NULL,
-  `profile_picture` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `profile_picture` varchar(200) NOT NULL,
+  PRIMARY KEY (`profile_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `profile`
@@ -75,39 +130,8 @@ INSERT INTO `profile` (`profile_id`, `name`, `address`, `age`, `gender`, `course
 (14, 'perdausi', 'recodo', 'Zamboanga City', 'Male', 'BSIT', '', 'single', '', 'Filopino', '../uploads/1741171153_CG114-removebg-preview.png'),
 (15, 'Testing', 'test123', '23', 'Female', 'BSCS', 'i am a fully grown women you bitch!', 'single', '', 'Korean', '../uploads/1741171733_CG114.png'),
 (16, 'JEFREY LOU', 'CALIFORNIYA', '25', 'Male', 'BSCS', 'I AM A SINGER', 'Taken', 'active', 'CALIFORNIAN', '../uploads/1741172137_download.png'),
-(17, 'test product', 'recodo', '23', 'Male', 'BSIT', 'I AM A SINGER', 'sadsad', 'inActive', 'sadas', '../uploads/1741172228_bg.png');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin_tbl`
---
-ALTER TABLE `admin_tbl`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `profile`
---
-ALTER TABLE `profile`
-  ADD PRIMARY KEY (`profile_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `admin_tbl`
---
-ALTER TABLE `admin_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `profile`
---
-ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+(17, 'test product', 'recodo', '23', 'Male', 'BSIT', 'I AM A SINGER', 'sadsad', 'inActive', 'sadas', '../uploads/1741172228_bg.png'),
+(18, 'Daniel Padilla', 'Recodo Zamboanga City', '19', 'Male', 'BSCS', 'passionate about everything you bitch!!f afisdfisdigsdfignf dsfgnisdnf dfbsd dighsd dsignsdig gdisgs', 'single', 'active', 'Filipino', '../uploads/1741669276_daniel.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
