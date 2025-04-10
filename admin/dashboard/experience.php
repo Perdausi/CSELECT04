@@ -28,20 +28,34 @@
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
-                    <?php 
-                        include "../nav/header.php";
-                    ?>
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <div class="container-fluid">
+                        <button class="btn btn-light" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>                    </div>
+                </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h1 class="mt-4">Simple Sidebar</h1>
-                    <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                    <p>
-                        Make sure to keep all page content within the
-                        <code>#page-content-wrapper</code>
-                        . The top navbar is optional, and just for demonstration. Just create an element with the
-                        <code>#sidebarToggle</code>
-                        ID which will toggle the menu when clicked.
-                    </p>
+                    <h1 class="mt-4">Experience</h1>
+                    <form action="../query/experience_query.php" method="POST">
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" placeholder="Name" name="position"/>
+                            <label for="inputName">Position</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputAddress" type="text" placeholder="Address" name="company"/>
+                            <label for="inputAddress">Company</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputAge" type="date" placeholder="Age" name="dates"/>
+                            <label for="inputAge">Date Hired</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="inputAge" type="text" placeholder="Age" name="description"/>
+                            <label for="inputAge">Description</label>
+                        </div>
+                        <button class="btn btn-primary " type="submit">Save</button>
+                    </form>
                 </div>
             </div>
         </div>
