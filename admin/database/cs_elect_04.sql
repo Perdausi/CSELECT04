@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 10, 2025 at 05:40 AM
+-- Generation Time: Apr 10, 2025 at 06:54 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -45,6 +45,48 @@ INSERT INTO `admin_tbl` (`id`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `awards`
+--
+
+DROP TABLE IF EXISTS `awards`;
+CREATE TABLE IF NOT EXISTS `awards` (
+  `award_id` int(11) NOT NULL AUTO_INCREMENT,
+  `award` varchar(200) NOT NULL,
+  PRIMARY KEY (`award_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `awards`
+--
+
+INSERT INTO `awards` (`award_id`, `award`) VALUES
+(1, 'Best in Visual faces'),
+(2, 'Best in Jealousy'),
+(3, 'best in Attitude');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `certificates`
+--
+
+DROP TABLE IF EXISTS `certificates`;
+CREATE TABLE IF NOT EXISTS `certificates` (
+  `cert_id` int(11) NOT NULL AUTO_INCREMENT,
+  `certificate` varchar(200) NOT NULL,
+  PRIMARY KEY (`cert_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `certificates`
+--
+
+INSERT INTO `certificates` (`cert_id`, `certificate`) VALUES
+(1, 'Certificate in Mobile Responsive');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `education`
 --
 
@@ -79,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `experience` (
   `dates` varchar(200) NOT NULL,
   `description` varchar(200) NOT NULL,
   PRIMARY KEY (`exp_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `experience`
@@ -91,7 +133,8 @@ INSERT INTO `experience` (`exp_id`, `position`, `company`, `dates`, `description
 (3, 'MERN-STACK DEV', 'Sunshine Company', '2025-05-01', 'Best Company in the World'),
 (4, '', '', '', 'School that cares'),
 (5, '', '', '', 'IGHUDFHGUIFD'),
-(6, '', '', '', 'GO GO GO!');
+(6, '', '', '', 'GO GO GO!'),
+(7, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -132,6 +175,33 @@ INSERT INTO `profile` (`profile_id`, `name`, `address`, `age`, `gender`, `course
 (16, 'JEFREY LOU', 'CALIFORNIYA', '25', 'Male', 'BSCS', 'I AM A SINGER', 'Taken', 'active', 'CALIFORNIAN', '../uploads/1741172137_download.png'),
 (17, 'test product', 'recodo', '23', 'Male', 'BSIT', 'I AM A SINGER', 'sadsad', 'inActive', 'sadas', '../uploads/1741172228_bg.png'),
 (18, 'Daniel Padilla', 'Recodo Zamboanga City', '19', 'Male', 'BSCS', 'passionate about everything you bitch!!f afisdfisdigsdfignf dsfgnisdnf dfbsd dighsd dsignsdig gdisgs', 'single', 'active', 'Filipino', '../uploads/1741669276_daniel.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skills`
+--
+
+DROP TABLE IF EXISTS `skills`;
+CREATE TABLE IF NOT EXISTS `skills` (
+  `skill_id` int(11) NOT NULL AUTO_INCREMENT,
+  `skill` varchar(200) NOT NULL,
+  PRIMARY KEY (`skill_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `skills`
+--
+
+INSERT INTO `skills` (`skill_id`, `skill`) VALUES
+(1, 'Bootstrap'),
+(2, 'HTML AND CSS'),
+(3, 'java'),
+(4, 'react'),
+(5, 'mern stack'),
+(6, 'javascript'),
+(7, 'best in Attitude'),
+(8, 'Best in Jealousy');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

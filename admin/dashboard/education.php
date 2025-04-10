@@ -14,17 +14,7 @@
     <body>
         <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
-            <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="dashboard.php">Dashboard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="profile.php">My Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="experience.php">Experience</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="education.php">Education</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
-                </div>
-            </div>
+            <?php include 'side_menu.php'; ?>
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
