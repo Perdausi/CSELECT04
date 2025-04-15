@@ -59,7 +59,7 @@
                         <a class="social-icon" href="#!"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon" href="#!"><i class="fab fa-github"></i></a>
                         <a class="social-icon" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="social-icon" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="social-icon" href="https://www.facebook.com/OfficialDanielPadilla/"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
             </section>
@@ -155,7 +155,7 @@
             <!-- awards-->
             <section class="resume-section" id="awards">
             <div class="resume-section-content">
-                    <h2 class="mb-5">Awards & Certifications</h2>
+                    <h2 class="mb-5">List of Awards</h2>
                     <?php
                     // Assuming you already ran a query like:
                     $result = mysqli_query($conn, "SELECT * FROM awards");
@@ -176,7 +176,7 @@
             <!-- certificates-->
             <section class="resume-section" id="certifications">
             <div class="resume-section-content">
-                    <h2 class="mb-5">Awards & Certifications</h2>
+                    <h2 class="mb-5">List of Certidicates</h2>
                     <?php
                     // Assuming you already ran a query like:
                     $result = mysqli_query($conn, "SELECT * FROM certificates");
