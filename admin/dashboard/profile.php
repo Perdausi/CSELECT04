@@ -6,6 +6,11 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Profile Management - Modal Form</title>
+    <!-- Add this inside the <head> section -->
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <!-- ABOVE LINK IS FOR THE TABLE ALSO THE SCRIPT AT THE BOTTOM -->
+
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap CSS -->
@@ -104,6 +109,71 @@
                     </div>
                 </div>
 
+               <!-- TABLE -->
+               <!-- Profile Table -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Profile List</h5>
+                    </div>
+                    <div class="card-body">
+                        <table id="profileTable" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>Course</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Sample static data -->
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>21</td>
+                                    <td>Male</td>
+                                    <td>BSCS</td>
+                                    <td>Active</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Jane Smith</td>
+                                    <td>22</td>
+                                    <td>Female</td>
+                                    <td>BSIT</td>
+                                    <td>Inactive</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Perdausi Smith</td>
+                                    <td>22</td>
+                                    <td>Male</td>
+                                    <td>BSIT</td>
+                                    <td>Inactive</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Replace with PHP loop later -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+
+
+
             </div>
         </div>
     </div>
@@ -112,5 +182,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="js/scripts.js"></script>
+
+
+    <!-- TABLE SCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#profileTable').DataTable();
+    });
+</script>
 </body>
 </html>
