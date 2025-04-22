@@ -109,66 +109,66 @@
                     </div>
                 </div>
 
-                <?php
-// Include your database connection file
-include '../database/connection.php';
+                                    <?php
+                    // Include your database connection file
+                    include '../database/connection.php';
 
-// Query the database to fetch the profile data
-$query = "SELECT * FROM `profile`"; // Assuming your table name is 'profiles'
-$result = mysqli_query($conn, $query);
-?>
+                    // Query the database to fetch the profile data
+                    $query = "SELECT * FROM `profile`"; // Assuming your table name is 'profiles'
+                    $result = mysqli_query($conn, $query);
+                    ?>
 
-<!-- TABLE -->
-<!-- Profile Table -->
-<div class="card mb-4">
-    <div class="card-header">
-        <h5>Profile List</h5>
-    </div>
-    <div class="card-body">
-        <table id="profileTable" class="table table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Course</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                // Loop through the result and output each row
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        // Fetch data for each profile
-                        $name = $row['name'];
-                        $age = $row['age'];
-                        $gender = $row['gender'];
-                        $course = $row['course'];
-                        $status = $row['status'];
-                ?>
-                    <tr>
-                        <td><?php echo $name; ?></td>
-                        <td><?php echo $age; ?></td>
-                        <td><?php echo $gender; ?></td>
-                        <td><?php echo $course; ?></td>
-                        <td><?php echo $status; ?></td>
-                        <td>
-                            <button class="btn btn-sm btn-info">Edit</button>
-                            <button class="btn btn-sm btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                <?php
-                    }
-                } else {
-                    echo "<tr><td colspan='6'>No profiles found</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+                    <!-- TABLE -->
+                    <!-- Profile Table -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Profile List</h5>
+                        </div>
+                        <div class="card-body">
+                            <table id="profileTable" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Course</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // Loop through the result and output each row
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            // Fetch data for each profile
+                                            $name = $row['name'];
+                                            $age = $row['age'];
+                                            $gender = $row['gender'];
+                                            $course = $row['course'];
+                                            $status = $row['status'];
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $name; ?></td>
+                                            <td><?php echo $age; ?></td>
+                                            <td><?php echo $gender; ?></td>
+                                            <td><?php echo $course; ?></td>
+                                            <td><?php echo $status; ?></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-info">Edit</button>
+                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='6'>No profiles found</td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
 
 

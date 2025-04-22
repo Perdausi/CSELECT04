@@ -62,6 +62,11 @@
                                             <input class="form-control" id="inputDescription" type="text" placeholder="Description" name="description" required />
                                             <label for="inputDescription">Description</label>
                                         </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="inputDescription" type="text" placeholder="Description" name="salary" required />
+                                            <label for="inputDescription">salary</label>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -95,7 +100,7 @@
                                         <th>Position</th>
                                         <th>Company</th>
                                         <th>Date Hired</th>
-                                        <th>Description</th>
+                                        <th>salary</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -108,13 +113,13 @@
                                             $position = $row['position'];
                                             $company = $row['company'];
                                             $dates = $row['dates'];
-                                            $description = $row['description'];
+                                            $salary = $row['salary'];
                                     ?>
                                         <tr>
                                             <td><?php echo $position; ?></td>
                                             <td><?php echo $company; ?></td>
                                             <td><?php echo $dates; ?></td>
-                                            <td><?php echo $description; ?></td>
+                                            <td><?php echo $salary; ?></td>
                                             <td>
                                                 <button class="btn btn-sm btn-info">Edit</button>
                                                 <button class="btn btn-sm btn-danger">Delete</button>
