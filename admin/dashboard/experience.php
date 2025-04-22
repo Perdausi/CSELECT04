@@ -71,6 +71,66 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <?php
+                    // Include your database connection file
+                    include '../database/connection.php';
+
+                    // Query the database to fetch the profile data
+                    $query = "SELECT * FROM `experience`"; // Assuming your table name is 'profiles'
+                    $result = mysqli_query($conn, $query);
+                    ?>
+
+                    <!-- TABLE -->
+                    <!-- Profile Table -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Experiences</h5>
+                        </div>
+                        <div class="card-body">
+                            <table id="profileTable" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Position</th>
+                                        <th>Company</th>
+                                        <th>Date Hired</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // Loop through the result and output each row
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            // Fetch data for each profile
+                                            $position = $row['position'];
+                                            $company = $row['company'];
+                                            $dates = $row['dates'];
+                                            $description = $row['description'];
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $position; ?></td>
+                                            <td><?php echo $company; ?></td>
+                                            <td><?php echo $dates; ?></td>
+                                            <td><?php echo $description; ?></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-info">Edit</button>
+                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='6'>No profiles found</td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     
                 </div>
             </div>

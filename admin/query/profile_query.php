@@ -38,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Profile Submitted!'); window.location='../dashboard/profile.php';</script>";
     } else {
         echo "<script>alert('Something went Wrong!');</script>";
-        ex
     }
     
 } else {
