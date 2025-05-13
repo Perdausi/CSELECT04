@@ -141,6 +141,71 @@
                     </div>
                 </div>
 
+
+
+
+
+                <!-- UPDATE MODAL -->
+                <div class="modal fade" id="UpdateProfileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <form action="../query/profile_query.php" method="POST" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                <?php 
+                                include '../database/connection.php'; 
+                                
+                                $query = "SELECT * FROM `profile` ORDER BY `profile_id` DESC LIMIT 1";
+                                $res = mysqli_query($conn, $query);
+                                $user = mysqli_fetch_assoc($res);
+                                ?>
+
+                                    <!-- NAME UPDATE -->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="text" placeholder="Address" name="name" />
+                                        <label for="inputAddress"><?php echo $user['name']; ?></label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="text" placeholder="Address" name="address" />
+                                        <label for="inputAddress">Address</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="text" placeholder="Age" name="age" />
+                                        <label for="inputAge">Age</label>
+                                    </div>
+
+                                    <select name="gender" class="form-control p-3 mb-3">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+
+                                    <select name="course" class="form-control p-3 mb-3">
+                                        <option value="BSCS">BSCS</option>
+                                        <option value="BSIT">BSIT</option>
+                                        <option value="BSTB">BSTB</option>
+                                        <option value="UNDER GRAD">UNDER GRAD</option>
+                                    </select>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" type="text" placeholder="Civil Status" name="status" />
+                                        <label for="inputStatus">Civil Status</label>
+                                    </div> 
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary" type="submit">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                                     <?php
                     // Include your database connection file
                     include '../database/connection.php';
@@ -193,7 +258,7 @@
                                             <td><?php echo $course; ?></td>
                                             <td><?php echo $status; ?></td>
                                             <td>
-                                                <button class="btn btn-sm btn-info"><img src="\CSELECT04\icons\edit_icon.png" alt="edit" width="18px"></button>
+                                                <button class="btn btn-sm btn-info"data-bs-toggle="modal" data-bs-target="#UpdateProfileModal"><img src="\CSELECT04\icons\edit_icon.png" alt="edit" width="18px"></button>
                                                 <button class="btn btn-sm btn-danger"><img src="\CSELECT04\icons\delete_remove_icon.png" alt="delete" width="18px"></button>
                                             </td>
                                         </tr>
