@@ -51,10 +51,42 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
+
+                                    <!-- NAME UPDATE -->
+
+
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="Name" name="name" />
+                                        <select class="form-select" name="name" id="inputName">
+                                            <option selected disabled>Select a name</option>
+                                            <?php
+                                            // Connect to your database
+                                            include '../database/connection.php';
+
+                                            // Check connection
+                                            if ($conn->connect_error) {
+                                                die("Connection failed: " . $conn->connect_error);
+                                            }
+
+                                            // Query names from your table
+                                            $sql = "SELECT * FROM `profile` ORDER BY `profile`.`name` DESC";
+                                            $result = $conn->query($sql);
+
+                                            // Output names as options
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                                                }
+                                            } else {
+                                                echo '<option>No names found</option>';
+                                            }
+
+                                            $conn->close();
+                                            ?>
+                                        </select>
                                         <label for="inputName">Name</label>
                                     </div>
+
+
                                     <div class="form-floating mb-3">
                                         <input class="form-control" type="text" placeholder="Address" name="address" />
                                         <label for="inputAddress">Address</label>
@@ -116,6 +148,7 @@
                     // Query the database to fetch the profile data
                     $query = "SELECT * FROM `profile`"; // Assuming your table name is 'profiles'
                     $result = mysqli_query($conn, $query);
+                    $count = 1;
                     ?>
 
                     <!-- TABLE -->
@@ -128,9 +161,11 @@
                             <table id="profileTable" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>Age</th>
                                         <th>Gender</th>
+                                        <th>Address</th>
                                         <th>Course</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -145,18 +180,21 @@
                                             $name = $row['name'];
                                             $age = $row['age'];
                                             $gender = $row['gender'];
+                                            $address = $row['address'];
                                             $course = $row['course'];
                                             $status = $row['status'];
                                     ?>
                                         <tr>
+                                            <td><?php echo $count++; ?></td>
                                             <td><?php echo $name; ?></td>
                                             <td><?php echo $age; ?></td>
                                             <td><?php echo $gender; ?></td>
+                                            <td><?php echo $address ?></td>
                                             <td><?php echo $course; ?></td>
                                             <td><?php echo $status; ?></td>
                                             <td>
-                                                <button class="btn btn-sm btn-info">Edit</button>
-                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                                <button class="btn btn-sm btn-info"><img src="\CSELECT04\icons\edit_icon.png" alt="edit" width="18px"></button>
+                                                <button class="btn btn-sm btn-danger"><img src="\CSELECT04\icons\delete_remove_icon.png" alt="delete" width="18px"></button>
                                             </td>
                                         </tr>
                                     <?php

@@ -46,6 +46,39 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
+                                          <!-- NAME UPDATE -->
+
+
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" name="name" id="inputName">
+                                            <option selected disabled>Select a name</option>
+                                            <?php
+                                            // Connect to your database
+                                            include '../database/connection.php';
+
+                                            // Check connection
+                                            if ($conn->connect_error) {
+                                                die("Connection failed: " . $conn->connect_error);
+                                            }
+
+                                            // Query names from your table
+                                            $sql = "SELECT * FROM `profile` ORDER BY `profile`.`name` DESC";
+                                            $result = $conn->query($sql);
+
+                                            // Output names as options
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                                                }
+                                            } else {
+                                                echo '<option>No names found</option>';
+                                            }
+
+                                            $conn->close();
+                                            ?>
+                                        </select>
+                                        <label for="inputName">Name</label>
+                                    </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" type="text" placeholder="Position" name="position" required />
                                             <label for="inputPosition">Position</label>
@@ -121,8 +154,8 @@
                                             <td><?php echo $dates; ?></td>
                                             <td><?php echo $salary; ?></td>
                                             <td>
-                                                <button class="btn btn-sm btn-info">Edit</button>
-                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                            <button class="btn btn-sm btn-info"><img src="\CSELECT04\icons\edit_icon.png" alt="edit" width="18px"></button>
+                                            <button class="btn btn-sm btn-danger"><img src="\CSELECT04\icons\delete_remove_icon.png" alt="delete" width="18px"></button>
                                             </td>
                                         </tr>
                                     <?php
