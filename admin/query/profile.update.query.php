@@ -11,6 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $age = $_POST['age'];
     $gender = $_POST['gender'];
     $course = $_POST['course'];
+    $status = $_POST['status'];
+
 
 
 
@@ -21,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         `age` = '$age',
         `gender` = '$gender',
         `course` = '$course',
-        WHERE `id` = $id";
+        `status` = '$status'
+        WHERE `profile_id` = $id";
 
     $result = mysqli_query($conn, $query);
 

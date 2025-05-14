@@ -111,6 +111,82 @@
                     </div>
 
 
+                    <!-- UPDATE MODAL -->
+                     <!-- Modal -->
+                    <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="../query/experience_query.php" method="POST">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="experienceModalLabel">Add Experience</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                          <!-- NAME UPDATE -->
+
+
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" name="name" id="inputName">
+                                            <option selected disabled>Select a name</option>
+                                            <?php
+                                            // Connect to your database
+                                            include '../database/connection.php';
+
+                                            // Check connection
+                                            if ($conn->connect_error) {
+                                                die("Connection failed: " . $conn->connect_error);
+                                            }
+
+                                            // Query names from your table
+                                            $sql = "SELECT * FROM `profile` ORDER BY `profile`.`name` DESC";
+                                            $result = $conn->query($sql);
+
+                                            // Output names as options
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
+                                                }
+                                            } else {
+                                                echo '<option>No names found</option>';
+                                            }
+
+                                            $conn->close();
+                                            ?>
+                                        </select>
+                                        <label for="inputName">Name</label>
+                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" type="text" placeholder="Position" name="position" required />
+                                            <label for="inputPosition">Position</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="inputCompany" type="text" placeholder="Company" name="company" required />
+                                            <label for="inputCompany">Company</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="inputDate" type="date" name="dates" required />
+                                            <label for="inputDate">Date Hired</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="inputDescription" type="text" placeholder="Description" name="description" required />
+                                            <label for="inputDescription">Description</label>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="inputDescription" type="text" placeholder="Description" name="salary" required />
+                                            <label for="inputDescription">salary</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <?php
                     // Include your database connection file
                     include '../database/connection.php';
@@ -154,7 +230,7 @@
                                             <td><?php echo $dates; ?></td>
                                             <td><?php echo $salary; ?></td>
                                             <td>
-                                            <button class="btn btn-sm btn-info"><img src="\CSELECT04\icons\edit_icon.png" alt="edit" width="18px"></button>
+                                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#experienceModal"><img src="\CSELECT04\icons\edit_icon.png" alt="edit" width="18px"></button>
                                             <button class="btn btn-sm btn-danger"><img src="\CSELECT04\icons\delete_remove_icon.png" alt="delete" width="18px"></button>
                                             </td>
                                         </tr>

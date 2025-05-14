@@ -56,33 +56,7 @@
 
 
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" name="name" id="inputName">
-                                            <option selected disabled>Select a name</option>
-                                            <?php
-                                            // Connect to your database
-                                            include '../database/connection.php';
-
-                                            // Check connection
-                                            if ($conn->connect_error) {
-                                                die("Connection failed: " . $conn->connect_error);
-                                            }
-
-                                            // Query names from your table
-                                            $sql = "SELECT * FROM `profile` ORDER BY `profile`.`name` DESC";
-                                            $result = $conn->query($sql);
-
-                                            // Output names as options
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo '<option value="' . htmlspecialchars($row["name"]) . '">' . htmlspecialchars($row["name"]) . '</option>';
-                                                }
-                                            } else {
-                                                echo '<option>No names found</option>';
-                                            }
-
-                                            $conn->close();
-                                            ?>
-                                        </select>
+                                        <input class="form-control" type="text" placeholder="Address" name="name" />
                                         <label for="inputName">Name</label>
                                     </div>
 
@@ -149,7 +123,7 @@
                 <div class="modal fade" id="UpdateProfileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <form action="../query/profile_query.php" method="POST" enctype="multipart/form-data">
+                            <form action="../query/profile.update.query.php" method="POST">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -158,42 +132,50 @@
 
                                 <?php 
                                 include '../database/connection.php'; 
-                                
                                 $query = "SELECT * FROM `profile` ORDER BY `profile_id` DESC LIMIT 1";
                                 $res = mysqli_query($conn, $query);
                                 $user = mysqli_fetch_assoc($res);
                                 ?>
 
                                     <!-- NAME UPDATE -->
+                                     <input type="hidden" name="profile_id" value="<?php echo $user['profile_id']; ?>">
+
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="Address" name="name" />
-                                        <label for="inputAddress"><?php echo $user['name']; ?></label>
+                                        <input class="form-control" type="text" name="name" value="<?php echo ($user['name']); ?>"/>
+                                        <label for="inputAge">Full Name</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="Address" name="address" />
-                                        <label for="inputAddress">Address</label>
+                                        <input class="form-control" type="text" placeholder="Address" name="address" value="<?php echo ($user['address']); ?>"/>
+                                        <label for="inputAge">Address</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="Age" name="age" />
+                                        <input class="form-control" type="text" placeholder="Age" name="age" value="<?php echo ($user['age']); ?>"/>
                                         <label for="inputAge">Age</label>
                                     </div>
 
-                                    <select name="gender" class="form-control p-3 mb-3">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
+                                    <div class="form-floating">
+                                        <select name="gender" class="form-control  mb-3">
+                                            <option value="Male" <?php echo ($user['gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                            <option value="Female" <?php echo ($user['gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                        </select>
+                                        <label for="inputAge">Gender</label>
+                                    </div>
 
-                                    <select name="course" class="form-control p-3 mb-3">
-                                        <option value="BSCS">BSCS</option>
-                                        <option value="BSIT">BSIT</option>
-                                        <option value="BSTB">BSTB</option>
-                                        <option value="UNDER GRAD">UNDER GRAD</option>
-                                    </select>
+                                    <!-- COURSE SELECT -->
+                                    <div class="form-floating">
+                                        <select name="course" class="form-control mb-3">
+                                            <option value="BSCS" <?php echo ($user['course'] == 'BSCS') ? 'selected' : ''; ?>>BSCS</option>
+                                            <option value="BSIT" <?php echo ($user['course'] == 'BSIT') ? 'selected' : ''; ?>>BSIT</option>
+                                            <option value="BSTB" <?php echo ($user['course'] == 'BSTB') ? 'selected' : ''; ?>>BSTB</option>
+                                            <option value="UNDER GRAD" <?php echo ($user['course'] == 'UNDER GRAD') ? 'selected' : ''; ?>>UNDER GRAD</option>
+                                        </select>
+                                        <label for="inputAge">Course</label>
+                                    </div>
 
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" placeholder="Civil Status" name="status" />
+                                        <input class="form-control" type="text" placeholder="Civil Status" name="status" value="<?php echo ($user['status']); ?>"/>
                                         <label for="inputStatus">Civil Status</label>
                                     </div> 
                                 </div>
@@ -258,8 +240,15 @@
                                             <td><?php echo $course; ?></td>
                                             <td><?php echo $status; ?></td>
                                             <td>
+                                                <!-- UPDATE BUTTON -->
                                                 <button class="btn btn-sm btn-info"data-bs-toggle="modal" data-bs-target="#UpdateProfileModal"><img src="\CSELECT04\icons\edit_icon.png" alt="edit" width="18px"></button>
-                                                <button class="btn btn-sm btn-danger"><img src="\CSELECT04\icons\delete_remove_icon.png" alt="delete" width="18px"></button>
+                                                <!-- DELTE BUTTON -->
+                                                <form action="../query/delete.profile.query.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this profile?');">
+                                                    <input type="hidden" name="profile_id" value="<?php echo $row['profile_id']; ?>">
+                                                    <button class="btn btn-sm btn-danger" type="submit">
+                                                        <img src="\CSELECT04\icons\delete_remove_icon.png" alt="delete" width="18px">
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php
