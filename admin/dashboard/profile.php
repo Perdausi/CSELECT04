@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: ../index.php"); // Redirect to login page if not logged in
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +38,8 @@
             <!-- Top navigation -->
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
-                    <button class="btn btn-light" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
+                    <button class="btn btn-light" id="sidebarToggle"><span></span></button>
+                    <a href="../query/logout.query.php" class="btn btn-danger p-2">Logout</a>
                 </div>
             </nav>
 
@@ -130,12 +141,15 @@
                                 </div>
                                 <div class="modal-body">
 
-                                <?php 
-                                include '../database/connection.php'; 
-                                $query = "SELECT * FROM `profile` ORDER BY `profile_id` DESC LIMIT 1";
-                                $res = mysqli_query($conn, $query);
-                                $user = mysqli_fetch_assoc($res);
-                                ?>
+                                 <?php 
+                                    include '../database/connection.php'; 
+                                    $admin_id = $_SESSION['admin_id'];
+                                    $count = 1;
+
+                                    $query = "SELECT * FROM `profile` WHERE admin_id = '$admin_id' ORDER BY `profile_id` DESC";
+                                    $result = mysqli_query($conn, $query);
+                                    $user = mysqli_fetch_assoc($result);
+                                    ?>
 
                                     <!-- NAME UPDATE -->
                                      <input type="hidden" name="profile_id" value="<?php echo $user['profile_id']; ?>">
@@ -143,6 +157,11 @@
                                     <div class="form-floating mb-3">
                                         <input class="form-control" type="text" name="name" value="<?php echo ($user['name']); ?>"/>
                                         <label for="inputAge">Full Name</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Description" name="description" style="height: 100px;"><?php echo ($user['description']); ?></textarea>
+                                        <label for="inputAge">Description</label>
                                     </div>
 
                                     <div class="form-floating mb-3">
@@ -187,80 +206,81 @@
                         </div>
                     </div>
                 </div>
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------- -->
+                   <?php 
+                        include '../database/connection.php'; 
+                        $admin_id = $_SESSION['admin_id'];
+                        $count = 1;
 
-                                    <?php
-                    // Include your database connection file
-                    include '../database/connection.php';
+                        $query = "SELECT * FROM `profile` WHERE admin_id = '$admin_id' ORDER BY `profile_id` DESC";
+                        $result = mysqli_query($conn, $query);
+                        ?>
 
-                    // Query the database to fetch the profile data
-                    $query = "SELECT * FROM `profile`"; // Assuming your table name is 'profiles'
-                    $result = mysqli_query($conn, $query);
-                    $count = 1;
-                    ?>
-
-                    <!-- TABLE -->
-                    <!-- Profile Table -->
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h5>Profile List</h5>
+                        <!-- Profile Table -->
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Age</th>
+                                                <th>Gender</th>
+                                                <th>Address</th>
+                                                <th>Course</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            if (mysqli_num_rows($result) > 0) {
+                                               
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                            ?>
+                                                    <tr>
+                                                        <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                                        <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?php echo htmlspecialchars($row['description']); ?>">
+                                                            <?php echo htmlspecialchars($row['description']); ?>
+                                                        </td>
+                                                        <td><?php echo htmlspecialchars($row['age']); ?></td>
+                                                        <td><?php echo htmlspecialchars($row['gender']); ?></td>
+                                                        <td><?php echo htmlspecialchars($row['address']); ?></td>
+                                                        <td><?php echo htmlspecialchars($row['course']); ?></td>
+                                                        <td>
+                                                            <span class="badge bg-<?php echo $row['status'] === 'Active' ? 'success' : 'secondary'; ?>">
+                                                                <?php echo htmlspecialchars($row['status']); ?>
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <!-- Update Button -->
+                                                            <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#UpdateProfileModal" title="Edit">
+                                                                <img src="/CSELECT04/icons/edit_icon.png" alt="edit" width="18px">
+                                                            </button>
+                                                            <!-- Delete Button -->
+                                                            <form action="../query/delete.profile.query.php" method="POST" class="d-inline"
+                                                                onsubmit="return confirm('Are you sure you want to delete this profile?');">
+                                                                <input type="hidden" name="profile_id" value="<?php echo $row['profile_id']; ?>">
+                                                                <button class="btn btn-sm btn-danger" type="submit" title="Delete">
+                                                                    <img src="/CSELECT04/icons/delete_remove_icon.png" alt="delete" width="18px">
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                            <?php
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='9' class='text-center text-muted'>No profiles found</td></tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <table id="profileTable" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Age</th>
-                                        <th>Gender</th>
-                                        <th>Address</th>
-                                        <th>Course</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // Loop through the result and output each row
-                                    if (mysqli_num_rows($result) > 0) {
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            // Fetch data for each profile
-                                            $name = $row['name'];
-                                            $age = $row['age'];
-                                            $gender = $row['gender'];
-                                            $address = $row['address'];
-                                            $course = $row['course'];
-                                            $status = $row['status'];
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $count++; ?></td>
-                                            <td><?php echo $name; ?></td>
-                                            <td><?php echo $age; ?></td>
-                                            <td><?php echo $gender; ?></td>
-                                            <td><?php echo $address ?></td>
-                                            <td><?php echo $course; ?></td>
-                                            <td><?php echo $status; ?></td>
-                                            <td>
-                                                <!-- UPDATE BUTTON -->
-                                                <button class="btn btn-sm btn-info"data-bs-toggle="modal" data-bs-target="#UpdateProfileModal"><img src="\CSELECT04\icons\edit_icon.png" alt="edit" width="18px"></button>
-                                                <!-- DELTE BUTTON -->
-                                                <form action="../query/delete.profile.query.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this profile?');">
-                                                    <input type="hidden" name="profile_id" value="<?php echo $row['profile_id']; ?>">
-                                                    <button class="btn btn-sm btn-danger" type="submit">
-                                                        <img src="\CSELECT04\icons\delete_remove_icon.png" alt="delete" width="18px">
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    <?php
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='6'>No profiles found</td></tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+
 
 
 

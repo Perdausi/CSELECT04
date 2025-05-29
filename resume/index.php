@@ -1,9 +1,24 @@
 <?php 
     include '../admin/database/connection.php';
 
-    $query = "SELECT * FROM `profile` ORDER BY `profile_id` DESC LIMIT 1";
-    $res = mysqli_query($conn, $query);
-    $user = mysqli_fetch_assoc($res);
+    session_start();
+
+        if (!isset($_SESSION['admin_id'])) {
+            header("Location: ../admin/index.php"); // Redirect to login page if not logged in
+            exit();
+        }
+
+    // $query = "SELECT * FROM `profile` ORDER BY `profile_id` DESC LIMIT 1";
+    // $res = mysqli_query($conn, $query);
+    // $user = mysqli_fetch_assoc($res);
+
+
+    $admin_id = $_SESSION['admin_id'];
+    $count = 1;
+
+    $query = "SELECT * FROM `profile` WHERE admin_id = '$admin_id' ORDER BY `profile_id` DESC";
+    $result = mysqli_query($conn, $query);
+    $user = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -66,61 +81,58 @@
             <hr class="m-0" />
 
             <?php 
+                $admin_id = $_SESSION['admin_id'];
+                $query = "SELECT * FROM `experience` WHERE admin_id = '$admin_id' ORDER BY `exp_id` DESC";
+                $result = mysqli_query($conn, $query);
+                ?>
 
-
-    $query = "SELECT * FROM `experience` ORDER BY `exp_id` DESC LIMIT 1";
-    $res = mysqli_query($conn, $query);
-    $exp = mysqli_fetch_assoc($res);
-    ?>
-            <!-- Experience -->
-            <section class="resume-section" id="experience">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Experience</h2>
-                    <?php
-                    // Assuming you already ran a query like:
-                    $result = mysqli_query($conn, "SELECT * FROM experience");
-                    while ($exp = mysqli_fetch_assoc($result)) {
-                    ?>
-                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                            <div class="flex-grow-1">
-                                <h3 class="mb-0"><?php echo $exp['position']; ?></h3>
-                                <div class="subheading mb-3"><?php echo $exp['company']; ?></div>
-                                <p><?php echo $exp['description']; ?></p>
+                <!-- Experience -->
+                <section class="resume-section" id="experience">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">Experience</h2>
+                        <?php while ($exp = mysqli_fetch_assoc($result)) { ?>
+                            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                <div class="flex-grow-1">
+                                    <h3 class="mb-0"><?php echo $exp['position']; ?></h3>
+                                    <div class="subheading mb-3"><?php echo $exp['company']; ?></div>
+                                    <p><?php echo $exp['description']; ?></p>
+                                </div>
+                                <div class="flex-shrink-0"><span class="text-primary"><?php echo $exp['dates']; ?></span></div>
                             </div>
-                            <div class="flex-shrink-0"><span class="text-primary"><?php echo $exp['dates']; ?></span></div>
-                        </div>
-                    <?php
-                    }
-                    ?>
-                </div>
-            </section>
+                        <?php } ?>
+                    </div>
+                </section>
+
 
 
 
             <hr class="m-0" />
             <!-- Education-->
-            <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Education</h2>
-                    <?php
-                    // Assuming you already ran a query like:
-                    $result = mysqli_query($conn, "SELECT * FROM education");
-                    while ($exp = mysqli_fetch_assoc($result)) {
-                    ?>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0"><?php echo $exp['attainment']; ?></h3>
-                            <div class="subheading mb-3"><?php echo $exp['school_name']; ?></div>
-                            <div><?php echo $exp['description']; ?></div>
-                            <p>GPA: 3.23</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2006 - May 2010</span></div>
+           <?php
+                $admin_id = $_SESSION['admin_id'];
+                $query = "SELECT * FROM `education` WHERE admin_id = '$admin_id' ORDER BY `educ_id` DESC";
+                $result = mysqli_query($conn, $query);
+                ?>
+
+                <section class="resume-section" id="education">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">Education</h2>
+                        <?php while ($edu = mysqli_fetch_assoc($result)) { ?>
+                            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                                <div class="flex-grow-1">
+                                    <h3 class="mb-0"><?php echo $edu['attainment']; ?></h3>
+                                    <div class="subheading mb-3"><?php echo $edu['school_name']; ?></div>
+                                    <div><?php echo $edu['description']; ?></div>
+                                    <!-- Optional GPA or other fields -->
+                                    <!-- <p>GPA: </p> -->
+                                </div>
+                                <!-- Optional: Add date range if available in DB -->
+                                <!-- <div class="flex-shrink-0"><span class="text-primary"><?php echo $edu['dates']; ?></span></div> -->
+                            </div>
+                        <?php } ?>
                     </div>
-                    <?php
-                    }
-                    ?>
-                </div>
-            </section>
+                </section>
+
 
 
 
@@ -129,70 +141,73 @@
 
 
             <!-- Skills-->
-            <section class="resume-section" id="skills">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Skills</h2>
-                    <div class="subheading mb-3">Languages</div>
-                    <?php
-                    // Assuming you already ran a query like:
-                    $result = mysqli_query($conn, "SELECT * FROM skills");
-                    while ($exp = mysqli_fetch_assoc($result)) {
-                    ?>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            <?php echo $exp['skill']; ?>
-                        </li>
-                    </ul>
-                    <?php
-                    }
-                    ?>
-                </div> 
-            </section>
+            <?php
+                $admin_id = $_SESSION['admin_id'];
+                $query = "SELECT * FROM `skills` WHERE admin_id = '$admin_id' ORDER BY skill_id DESC";
+                $result = mysqli_query($conn, $query);
+                ?>
+
+                <section class="resume-section" id="skills">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">Skills</h2>
+                        <div class="subheading mb-3">Languages</div>
+                        <ul class="fa-ul mb-0">
+                            <?php while ($skill = mysqli_fetch_assoc($result)) { ?>
+                                <li>
+                                    <span class="fa-li"><i class="fas fa-check"></i></span>
+                                    <?php echo $skill['skill']; ?>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </section>
+
             <hr class="m-0" />
 
 
             <!-- awards-->
-            <section class="resume-section" id="awards">
-            <div class="resume-section-content">
-                    <h2 class="mb-5">List of Awards</h2>
-                    <?php
-                    // Assuming you already ran a query like:
-                    $result = mysqli_query($conn, "SELECT * FROM awards");
-                    while ($exp = mysqli_fetch_assoc($result)) {
-                    ?>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            <?php echo $exp['award']; ?>
-                        </li>        
-                    </ul>
-                    <?php
-                    }
-                    ?>
-                </div>
-            </section>
+            <?php
+                $admin_id = $_SESSION['admin_id'];
+                $query = "SELECT * FROM `awards` WHERE admin_id = '$admin_id' ORDER BY award_id DESC";
+                $result = mysqli_query($conn, $query);
+                ?>
+
+                <section class="resume-section" id="awards">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">List of Awards</h2>
+                        <ul class="fa-ul mb-0">
+                            <?php while ($award = mysqli_fetch_assoc($result)) { ?>
+                                <li>
+                                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
+                                    <?php echo $award['award']; ?>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </section>
+
             <hr class="m-0" />
             <!-- certificates-->
-            <section class="resume-section" id="certifications">
-            <div class="resume-section-content">
-                    <h2 class="mb-5">List of Certidicates</h2>
-                    <?php
-                    // Assuming you already ran a query like:
-                    $result = mysqli_query($conn, "SELECT * FROM certificates");
-                    while ($exp = mysqli_fetch_assoc($result)) {
-                    ?>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            <?php echo $exp['certificate']; ?>
-                        </li>        
-                    </ul>
-                    <?php
-                    }
-                    ?>
-                </div>
-            </section>
+           <?php
+                $admin_id = $_SESSION['admin_id'];
+                $query = "SELECT * FROM `certificates` WHERE admin_id = '$admin_id' ORDER BY cert_id DESC";
+                $result = mysqli_query($conn, $query);
+                ?>
+
+                <section class="resume-section" id="certifications">
+                    <div class="resume-section-content">
+                        <h2 class="mb-5">List of Certificates</h2>
+                        <ul class="fa-ul mb-0">
+                            <?php while ($cert = mysqli_fetch_assoc($result)) { ?>
+                                <li>
+                                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
+                                    <?php echo $cert['certificate']; ?>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </section>
+
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

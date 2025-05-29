@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: ../index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,52 +14,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Skills - Modal Form</title>
-    <!-- Favicon-->
+    <title>Education - Modal Example</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Custom CSS -->
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
     <div class="d-flex" id="wrapper">
-        <!-- Sidebar -->
         <?php include 'side_menu.php'; ?>
 
-        <!-- Page content wrapper -->
         <div id="page-content-wrapper">
-            <!-- Top navigation -->
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
-                    <button class="btn btn-light" id="sidebarToggle">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    <button class="btn btn-light" id="sidebarToggle"><span></span></button>
+                    <a href="../query/logout.query.php" class="btn btn-danger p-2">Logout</a>
                 </div>
             </nav>
 
-            <!-- Page content -->
             <div class="container-fluid">
                 <h1 class="mt-4">Skills</h1>
 
-                <!-- Add Skill Button -->
-                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#skillModal">
-                    Add Skill
+                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#educationModal">
+                    Add Skills
                 </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="skillModal" tabindex="-1" aria-labelledby="skillModalLabel" aria-hidden="true">
+                <!-- Add Education Modal -->
+                <div class="modal fade" id="educationModal" tabindex="-1" aria-labelledby="educationModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <form action="../query/skills.query.php" method="POST">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="skillModalLabel">Add Skill</h5>
+                                    <h5 class="modal-title" id="educationModalLabel">Add your skill</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" type="text" id="inputSkill" placeholder="Enter skill" name="skill" required />
-                                        <label for="inputSkill">Enter skill</label>
+                                        <input class="form-control" type="text" name="skills" placeholder="Skills" required />
+                                        <label>Skills</label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -62,64 +62,86 @@
                     </div>
                 </div>
 
-
-
                 <?php
-                    // Include your database connection file
-                    include '../database/connection.php';
+                include '../database/connection.php';
+                $admin_id = $_SESSION['admin_id'];
+                $query = "SELECT * FROM skills WHERE admin_id = '$admin_id' ORDER BY skill_id DESC";
+                $result = mysqli_query($conn, $query);
+                ?>
 
-                    // Query the database to fetch the profile data
-                    $query = "SELECT * FROM `skills`"; // Assuming your table name is 'profiles'
-                    $result = mysqli_query($conn, $query);
-                    ?>
-
-                    <!-- TABLE -->
-                    <!-- Profile Table -->
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h5>Skills</h5>
-                        </div>
-                        <div class="card-body">
-                            <table id="profileTable" class="table table-striped " style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Skills</th>
-                                        <!-- <th>action</th> -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // Loop through the result and output each row
-                                    if (mysqli_num_rows($result) > 0) {
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            // Fetch data for each profile
-                                            $skill = $row['skill'];;
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $skill; ?></td>
-                                            <!-- <td>
-                                                <button class="btn btn-sm btn-info">Edit</button>
-                                                <button class="btn btn-sm btn-danger">Delete</button>
-                                            </td> -->
-                                        </tr>
-                                    <?php
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='6'>No profiles found</td></tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Skills</h5>
                     </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Skill</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $skill_id = $row['skill_id'];
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['skill']; ?></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editModal_<?php echo $skill_id; ?>">
+                                            <img src="/CSELECT04/icons/edit_icon.png" alt="edit" width="18px">
+                                        </button>
+                                        <form action="../query/delete.education.php" method="POST" style="display:inline-block;" onsubmit="return confirm('Are you sure you want to delete this education record?');">
+                                            <input type="hidden" name="skills" value="<?php echo $skill_id; ?>">
+                                            <button class="btn btn-sm btn-danger" type="submit">
+                                                <img src="/CSELECT04/icons/delete_remove_icon.png" alt="delete" width="18px">
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
 
+                                <!-- Edit Modal -->
+                                <div class="modal fade" id="editModal_<?php echo $skill_id; ?>" tabindex="-1" aria-labelledby="editModalLabel_<?php echo $skill_id; ?>" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="../query/skills.update.php" method="POST">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editModalLabel_<?php echo $skill_id; ?>">Edit Education</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="skill_id" value="<?php echo $skill_id; ?>">
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" type="text" name="skills" value="<?php echo $row['skill']; ?>" required />
+                                                        <label>School Name</label>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button class="btn btn-primary" type="submit">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='4'>No education records found</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
     <script src="js/scripts.js"></script>
 </body>
 </html>

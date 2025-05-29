@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -24,6 +25,8 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="skills.php">Skills</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="awards.php">Awards</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="certificate.php">Certificates</a>
+                    
+
                 </div>
             </div>
             <!-- Page content wrapper-->
