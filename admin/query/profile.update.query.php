@@ -18,20 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $isActive = $_POST['isActive'] ?? '1';
     $citizenship = $_POST['citizenship'] ?? '';
     
-    // $profile_picture_sql = ""; // default, if no new picture is uploaded
-
-    // // if (!empty($_FILES['profile_picture']['name'])) {
-    // //     $upload_dir = "../uploads/";
-    // //     $file_name = time() . "_" . basename($_FILES['profile_picture']['name']);
-    // //     $target_path = $upload_dir . $file_name;
-
-    // //     if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target_path)) {
-    // //         $profile_picture_sql = ", profile_picture = '$target_path'";
-    // //     } else {
-    // //         echo "<script>alert('Error uploading file.'); window.location='../dashboard/profile.php';</script>";
-    // //         exit();
-    // //     }
-    // // }
 
     $query = "UPDATE `profile` 
               SET 
@@ -45,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   `status` = '$status',
                   `isActive` = '$isActive',
                   `citizenship` = '$citizenship'
-                --   $profile_picture_sql
               WHERE `profile_id` = '$profile_id'";
 
     $result = mysqli_query($conn, $query);
